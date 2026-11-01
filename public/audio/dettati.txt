@@ -1,0 +1,25 @@
+# ==========================================================
+# HANGUL·WALK - ELENCO DEI DETTATI IN LINGUA COREANA
+# ==========================================================
+# Per aggiungere o modificare un dettato basta aggiungere una riga:
+# Difficoltà | Nome file MP3 | Titolo | Frase in coreano (Hangul)
+# 
+# Difficoltà supportate: Principiante, Intermedio, Avanzato
+# I file MP3 vanno nella cartella /public/audio/
+# Puoi inserire anche dialoghi e testi lunghi con più frasi!
+# ==========================================================
+
+Principiante | topik1_01_saluti.mp3 | 01. Saluti e Presentazione (TOPIK 1) | 안녕하세요! 만나서 반갑습니다. 저는 마르코입니다.
+Principiante | topik1_02_nazionalita.mp3 | 02. Nazionalità e Studio (TOPIK 1) | 어느 나라 사람이에요? 저는 이탈리아 사람이고 지금 한국어를 공부하고 있어요.
+Principiante | topik1_03_tempo.mp3 | 03. Data e Appuntamento (TOPIK 1) | 오늘은 금요일이에요. 지금 몇 시예요? 오후 세 시 반에 만나요.
+Principiante | topik1_04_ristorante.mp3 | 04. Al Ristorante e Caffetteria | 안녕하세요! 아이스 아메리카노 한 잔과 김밥 한 줄 주세요. 전부 얼마예요? 카드로 결제할게요. 감사합니다!
+Intermedio | topik2_01_spesa.mp3 | 05. Shopping a Seoul | 이 검은색 코트 얼마예요? 정말 마음에 드는데 혹시 다른 사이즈나 색상도 있나요? 조금만 깎아 주실 수 있어요?
+Intermedio | topik2_02_strada.mp3 | 06. Chiedere Indicazioni Stradali | 실례합니다, 지하철역이 어디에 있나요? 앞으로 똑바로 가시다가 두 번째 사거리에서 오른쪽으로 도세요.
+Intermedio | topik2_03_meteo.mp3 | 07. Previsioni del Tempo | 일기예보에서 이번 주말에 전국적으로 비가 내리고 기온도 5도 정도 떨어질 거라고 합니다.
+Intermedio | topik2_04_treno.mp3 | 08. Viaggio con il Treno KTX | 짙은 안개 때문에 오전 10시에 출발할 예정이었던 KTX 고속열차가 30분 지연되었습니다.
+Avanzato | topik3_01_studio.mp3 | 09. Metodo di Studio e Perseveranza | 새로운 언어를 배울 때는 흥미도 중요하지만 매일 꾸준히 반복해서 연습하는 끈기가 가장 필요합니다.
+Avanzato | topik3_02_cultura_te.mp3 | 10. Tradizione e Cultura del Tè | 한국의 전통 다도 문화는 마음을 다스리고 여유를 찾는 소중한 삶의 지혜를 담고 있습니다.
+Avanzato | topik3_03_tecnologia.mp3 | 11. Tecnologia Digitale e Società | 스마트폰과 간편 결제 시스템의 확산은 현대인의 일상적인 소비 생활을 빠르게 변화시키고 있습니다.
+Avanzato | topik3_04_ecologia.mp3 | 12. Ecologia e Tutela della Natura | 인간과 자연은 떼려야 뗄 수 없는 생명 공동체이며, 지속 가능한 미래를 위해 환경을 지켜야 합니다.
+Intermedio | topik2_05_fine_settimana.mp3 | 13. Dialogo: Fine Settimana a 경복궁 | 지난 주말에 친구들과 함께 경복궁에 갔어요. 날씨가 아주 맑아서 한복을 입고 사진을 많이 찍었어요. 저녁에는 인사동에서 맛있는 비빔밥을 먹었어요.
+Avanzato | topik3_05_lettura.mp3 | 14. Riflessione: Il Valore dei Libri | 독서는 우리의 생각을 넓혀줄 뿐만 아니라 복잡한 세상 속에서 깊은 위로와 통찰을 선물합니다. 매일 책을 읽는 습관은 매우 가치 있는 일입니다.

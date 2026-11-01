@@ -1,0 +1,6 @@
+{
+  "name": "HangulWalk - Walkman Dettato Coreano",
+  "description": "Lettore portatile stile Walkman anni '90 per esercizi di dettato in lingua coreana divisi per difficoltà con supporto MP3 e tasti fisici.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

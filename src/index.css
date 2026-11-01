@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Noto Sans KR', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+    background-color: #eef2f6;
+    background-image: 
+      radial-gradient(#d1d7e0 1px, transparent 1px),
+      linear-gradient(to bottom, #f5f7fa 0%, #e8ecf1 100%);
+    background-size: 24px 24px, 100% 100%;
+    color: #1f2937;
+    touch-action: manipulation;
+  }
+}
+
+/* Authentic retro LCD font and Chinese Hanzi fonts */
+.font-lcd {
+  font-family: 'VT323', 'Chakra Petch', monospace;
+}
+
+/* Custom Scrollbar for retro cassette deck feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e2e8f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+@keyframes spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-spin-reverse {
+  animation: spin-reverse 2s linear infinite;
+}
+
+/* 3D Walkman Chassis Shadows and Bevels */
+.walkman-drop-shadow {
+  box-shadow: 
+    0 24px 48px -12px rgba(15, 23, 42, 0.28),
+    0 12px 24px -8px rgba(15, 23, 42, 0.18),
+    0 2px 4px rgba(15, 23, 42, 0.1);
+}
+
+.tape-bubble-reflection {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.05) 45%, transparent 70%);
+}
