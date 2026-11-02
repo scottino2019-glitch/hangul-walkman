@@ -89,9 +89,9 @@ export const WalkmanChassis: React.FC<WalkmanChassisProps> = ({
     }
   }, [currentTrack?.id]);
 
-  // Handle Audio Element Loading
+  // Handle Track & Audio Loading
   useEffect(() => {
-    if (!audioRef.current || !currentTrack) return;
+    if (!currentTrack) return;
 
     setIsPlaying(false);
     setIsPaused(false);
@@ -99,15 +99,22 @@ export const WalkmanChassis: React.FC<WalkmanChassisProps> = ({
     setAbPoints({ a: null, b: null });
     setIsLoopingAB(false);
 
-    audioRef.current.playbackRate = settings.playbackRate;
-    audioRef.current.volume = settings.volume;
+    const phrase = currentTrack.koreanText || currentTrack.chineseText || '';
+    const estimatedDuration = Math.max(3, Math.round(phrase.length / 3.5));
 
-    const targetSrc = currentTrack.audioSrc;
-    if (!audioRef.current.src.endsWith(targetSrc)) {
-      audioRef.current.src = targetSrc;
-      audioRef.current.load();
+    if (settings.voiceMode === 'speech_synthesis') {
+      setDuration(estimatedDuration);
+    } else if (audioRef.current) {
+      audioRef.current.playbackRate = settings.playbackRate;
+      audioRef.current.volume = settings.volume;
+
+      const targetSrc = currentTrack.audioSrc;
+      if (!audioRef.current.src.endsWith(targetSrc)) {
+        audioRef.current.src = targetSrc;
+        audioRef.current.load();
+      }
     }
-  }, [currentTrack?.id, currentTrack?.audioSrc]);
+  }, [currentTrack?.id, currentTrack?.audioSrc, settings.voiceMode]);
 
   // Sync settings
   useEffect(() => {
@@ -116,6 +123,18 @@ export const WalkmanChassis: React.FC<WalkmanChassisProps> = ({
       audioRef.current.volume = settings.volume;
     }
   }, [settings.playbackRate, settings.volume]);
+
+  // Progress timer for speech synthesis mode
+  useEffect(() => {
+    if (!isPlaying || isPaused || settings.voiceMode !== 'speech_synthesis') return;
+    const interval = setInterval(() => {
+      setCurrentTime((prev) => {
+        if (prev >= duration) return prev;
+        return Number((prev + 0.1).toFixed(2));
+      });
+    }, 100);
+    return () => clearInterval(interval);
+  }, [isPlaying, isPaused, settings.voiceMode, duration]);
 
   // Tape counter increment
   useEffect(() => {
@@ -149,9 +168,11 @@ export const WalkmanChassis: React.FC<WalkmanChassisProps> = ({
     if (settings.voiceMode === 'speech_synthesis') {
       setIsPlaying(true);
       setIsPaused(false);
+      setCurrentTime(0);
       speakKoreanText(
         phraseToPlay,
         settings.playbackRate,
+        settings.volume,
         () => {
           setIsPlaying(false);
           setIsPaused(false);
@@ -174,6 +195,7 @@ export const WalkmanChassis: React.FC<WalkmanChassisProps> = ({
             speakKoreanText(
               phraseToPlay,
               settings.playbackRate,
+              settings.volume,
               () => {
                 setIsPlaying(false);
                 setIsPaused(false);
@@ -183,7 +205,7 @@ export const WalkmanChassis: React.FC<WalkmanChassisProps> = ({
           });
       }
     }
-  }, [currentTrack, settings.voiceMode, settings.playbackRate, onSentenceComplete]);
+  }, [currentTrack, settings.voiceMode, settings.playbackRate, settings.volume, onSentenceComplete]);
 
   // Pause
   const handlePause = useCallback(() => {

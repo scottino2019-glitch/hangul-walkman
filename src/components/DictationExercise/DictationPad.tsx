@@ -8,7 +8,6 @@ import {
   Award,
   BookOpen,
   Volume2,
-  Keyboard,
   Languages,
 } from 'lucide-react';
 import { soundFx } from '../../utils/audioEffects';
@@ -20,10 +19,6 @@ interface DictationPadProps {
   previousAttempt?: DictationAttempt;
 }
 
-// Basic Korean letters for quick input if user doesn't have Korean IME installed
-const HANGUL_CONSONANTS = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ', 'ㄲ', 'ㄸ', 'ㅃ', 'ㅆ', 'ㅉ'];
-const HANGUL_VOWELS = ['ㅏ', 'ㅑ', 'ㅓ', 'ㅕ', 'ㅗ', 'ㅛ', 'ㅜ', 'ㅠ', 'ㅡ', 'ㅣ', 'ㅐ', 'ㅒ', 'ㅔ', 'ㅖ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅢ'];
-
 export const DictationPad: React.FC<DictationPadProps> = ({
   currentTrack,
   onSaveAttempt,
@@ -33,7 +28,6 @@ export const DictationPad: React.FC<DictationPadProps> = ({
   const [hasChecked, setHasChecked] = useState(false);
   const [showSolution, setShowSolution] = useState(false);
   const [showRomanization, setShowRomanization] = useState(false);
-  const [showVirtualKeys, setShowVirtualKeys] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   const [charDiff, setCharDiff] = useState<
     Array<{ char: string; expected?: string; status: 'correct' | 'wrong' }>
@@ -108,11 +102,6 @@ export const DictationPad: React.FC<DictationPadProps> = ({
     setCharDiff([]);
   };
 
-  const handleInsertChar = (ch: string) => {
-    soundFx.playClick('switch');
-    setUserInput((prev) => prev + ch);
-  };
-
   if (!currentTrack) {
     return (
       <div className="w-full bg-white border-2 border-stone-300 rounded-3xl p-6 text-center text-stone-500 shadow-xs">
@@ -153,45 +142,7 @@ export const DictationPad: React.FC<DictationPadProps> = ({
         />
       </div>
 
-      {/* Tastierino rapido Hangul opzionale (per chi non ha tastiera coreana installata) */}
-      {showVirtualKeys && (
-        <div className="p-3 bg-stone-100 border border-stone-300 rounded-2xl space-y-2 animate-in fade-in text-xs font-mono">
-          <div className="flex items-center justify-between text-stone-600 font-bold text-[11px]">
-            <span>TASTIERA RAPIDA HANGUL (한글):</span>
-            <span className="text-stone-400 font-normal">Clicca per inserire</span>
-          </div>
-          <div>
-            <span className="text-[10px] text-stone-500 block mb-1">Consonanti (자음):</span>
-            <div className="flex flex-wrap gap-1">
-              {HANGUL_CONSONANTS.map((c) => (
-                <button
-                  key={c}
-                  onClick={() => handleInsertChar(c)}
-                  className="w-7 h-7 bg-white hover:bg-amber-100 border border-stone-300 rounded text-stone-800 font-bold text-xs flex items-center justify-center transition shadow-2xs cursor-pointer active:scale-95"
-                >
-                  {c}
-                </button>
-              ))}
-            </div>
-          </div>
-          <div>
-            <span className="text-[10px] text-stone-500 block mb-1">Vocali (모음):</span>
-            <div className="flex flex-wrap gap-1">
-              {HANGUL_VOWELS.map((v) => (
-                <button
-                  key={v}
-                  onClick={() => handleInsertChar(v)}
-                  className="w-7 h-7 bg-white hover:bg-amber-100 border border-stone-300 rounded text-stone-800 font-bold text-xs flex items-center justify-center transition shadow-2xs cursor-pointer active:scale-95"
-                >
-                  {v}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Barra pulsanti essenziale: Controlla, Ripulisci, Voce ko-KR, Romanizzazione e Soluzione */}
+      {/* Barra pulsanti essenziale: Controlla, Ripulisci, Voce ko-KR e Mostra Testo */}
       <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
         <div className="flex items-center gap-2">
           {/* Tasto principale CONVALIDA */}
@@ -216,24 +167,8 @@ export const DictationPad: React.FC<DictationPadProps> = ({
           )}
         </div>
 
-        {/* Azioni secondarie (Pronuncia ko-KR, Tastiera Hangul, e Mostra Testo) */}
+        {/* Azioni secondarie (Pronuncia ko-KR e Mostra Testo) */}
         <div className="flex flex-wrap items-center gap-2">
-          {/* Toggle Tastierino Hangul */}
-          <button
-            onClick={() => {
-              soundFx.playClick('switch');
-              setShowVirtualKeys(!showVirtualKeys);
-            }}
-            title="Mostra tastierino Hangul"
-            className={`flex items-center gap-1.5 px-3 py-2 rounded-xl font-mono text-xs font-semibold transition cursor-pointer border ${
-              showVirtualKeys
-                ? 'bg-amber-100 text-amber-900 border-amber-300'
-                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 border-stone-300'
-            }`}
-          >
-            <Keyboard className="w-3.5 h-3.5 text-amber-600" />
-            <span className="hidden sm:inline">Tastiera</span> Hangul
-          </button>
 
           {/* Pronuncia nativa coreana ko-KR */}
           <button

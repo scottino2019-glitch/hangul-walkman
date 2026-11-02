@@ -185,7 +185,7 @@ export default function App() {
                 <strong>4. Comandi Walkman:</strong> premi PLAY per ascoltare, REW/FF per spostarti di 5s, A-B per impostare un loop di riascolto.
               </p>
               <p>
-                <strong>5. Area testo Hangul & Tastierino:</strong> scrivi le frasi in coreano. Se non hai la tastiera coreana attiva sul tuo dispositivo, clicca su <em>Tastiera Hangul</em> per inserire rapidamente consonanti e vocali, poi premi <em>Controlla Dettato</em> per la verifica sillaba per sillaba.
+                <strong>5. Area testo libera in fondo:</strong> scrivi liberamente le frasi in coreano con la tua tastiera e premi <em>Controlla Dettato</em> per la verifica sillaba per sillaba.
               </p>
               <div className="p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-amber-900 mt-2 space-y-1">
                 <strong>Come inserire o modificare i dettati:</strong>
