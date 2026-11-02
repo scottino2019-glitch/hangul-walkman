@@ -11,7 +11,7 @@ import {
   Languages,
 } from 'lucide-react';
 import { soundFx } from '../../utils/audioEffects';
-import { speakKoreanText } from '../../utils/koreanSpeech';
+import { speakKoreanText, stopKoreanSpeech } from '../../utils/koreanSpeech';
 
 interface DictationPadProps {
   currentTrack: DictationItem | null;
@@ -28,6 +28,7 @@ export const DictationPad: React.FC<DictationPadProps> = ({
   const [hasChecked, setHasChecked] = useState(false);
   const [showSolution, setShowSolution] = useState(false);
   const [showRomanization, setShowRomanization] = useState(false);
+  const [isReadingPhrase, setIsReadingPhrase] = useState(false);
   const [score, setScore] = useState<number | null>(null);
   const [charDiff, setCharDiff] = useState<
     Array<{ char: string; expected?: string; status: 'correct' | 'wrong' }>
@@ -40,6 +41,8 @@ export const DictationPad: React.FC<DictationPadProps> = ({
     setShowSolution(false);
     setScore(null);
     setCharDiff([]);
+    stopKoreanSpeech();
+    setIsReadingPhrase(false);
   }, [currentTrack?.id]);
 
   const cleanForComparison = (str: string) => {
@@ -100,6 +103,19 @@ export const DictationPad: React.FC<DictationPadProps> = ({
     setShowSolution(false);
     setScore(null);
     setCharDiff([]);
+  };
+
+  const handleToggleRead = () => {
+    soundFx.playClick('switch');
+    if (isReadingPhrase) {
+      stopKoreanSpeech();
+      setIsReadingPhrase(false);
+    } else {
+      setIsReadingPhrase(true);
+      speakKoreanText(targetKoreanText, 0.9, 1.0, () => {
+        setIsReadingPhrase(false);
+      });
+    }
   };
 
   if (!currentTrack) {
@@ -172,15 +188,16 @@ export const DictationPad: React.FC<DictationPadProps> = ({
 
           {/* Pronuncia nativa coreana ko-KR */}
           <button
-            onClick={() => {
-              soundFx.playClick('switch');
-              speakKoreanText(targetKoreanText, 0.9);
-            }}
-            title="Ascolta con voce nativa coreana ko-KR"
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-mono text-xs font-semibold transition cursor-pointer border border-stone-300"
+            onClick={handleToggleRead}
+            title={isReadingPhrase ? "Ferma lettura" : "Ascolta con voce nativa coreana ko-KR"}
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-xl font-mono text-xs font-semibold transition cursor-pointer border ${
+              isReadingPhrase
+                ? 'bg-amber-500 text-stone-950 border-amber-400 font-bold shadow-xs'
+                : 'bg-stone-100 hover:bg-stone-200 text-stone-700 border-stone-300'
+            }`}
           >
-            <Volume2 className="w-3.5 h-3.5 text-amber-600" />
-            <span>Voce ko-KR</span>
+            <Volume2 className={`w-3.5 h-3.5 ${isReadingPhrase ? 'text-stone-950 animate-pulse' : 'text-amber-600'}`} />
+            <span>{isReadingPhrase ? '■ Ferma Lettura' : 'Voce ko-KR'}</span>
           </button>
 
           {/* Mostra / Nascondi Soluzione */}
